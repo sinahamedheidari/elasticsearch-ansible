@@ -1,5 +1,17 @@
 ## Elasticsearch Installation and Configuration for Production
+This role installs elasticsearch on CentOS/Debian based servers.
 
+### How to use?
+
+To install elasticsearch clone the role:
+```
+git clone git@github.com:sinahamedheidari/elasticsearch-ansible.git
+```
+
+Modify hosts and play the role:
+```
+ansible-play play.yml
+```
 
 ## System Configurations
 ### Disable swapping
