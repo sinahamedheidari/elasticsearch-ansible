@@ -1,0 +1,23 @@
+- name: Import the Elasticsearch GPG key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Add Elasticsearch repository
+  copy:
+    src: "templates/debianrepo.j2"  
+    dest: /etc/apt/sources.list.d/elastic-7.x.list
+
+- name: Install required packages
+  apt:
+    name: apt-transport-https
+    state: present
+    update_cache: yes
+
+- name: Install Elasticsearch
+  apt:
+    name: elasticsearch
+    state: present
+    update_cache: yes
+  notify:
+    - Start Elasticsearch
