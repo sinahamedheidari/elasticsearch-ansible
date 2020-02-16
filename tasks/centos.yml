@@ -1,18 +1,34 @@
-- name: Import the Elasticsearch GPG key
-  rpm_key:
-    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-    state: present
-    fingerprint: 4609 5ACC 8548 582C 1A26 99A9 D27D 666C D88E 42B4
-
-- name: Add Elasticsearch repository
-  copy:
-    src: "templates/centosrepo.j2"  
-    dest: /etc/yum.repos.d/elasticsearch.repo
-
-- name: Install Elasticsearch
-  yum:
-    name: elasticsearch
-    enablerepo: elasticsearch
-    state: present
-  notify:
-    - Start Elasticsearch
+---
+    - name: Import the Elasticsearch GPG key
+      rpm_key:
+        key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+        state: present
+        fingerprint: 4609 5ACC 8548 582C 1A26 99A9 D27D 666C D88E 42B4
+    
+    - name: Add Elasticsearch repository
+      yum_repository:
+        name: elasticsearch
+        description: Elasticsearch repository for 7.x packages
+        baseurl: https://artifacts.elastic.co/packages/7.x/yum
+        gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+        gpgcheck: 1
+        enabled: 0
+    
+    - name: Install Elasticsearch
+      yum:
+        name: elasticsearch
+        enablerepo: elasticsearch
+        state: present
+    
+    - name: Copy Elasticsearch configuration file
+      copy: 
+        src: "files/elasticsearch.yml"
+        dest: /etc/elasticsearch/elasticsearch.yml
+      notify:
+        - Restart Elasticsearch
+    
+    - name: Ensure Elasticsearch is started and enabled at boot time
+      service:
+        name: elasticsearch
+        state: started
+        enabled: yes
