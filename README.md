@@ -12,9 +12,6 @@ Modify hosts and play the role:
 ```
 ansible-play play.yml
 ```
-
-### Note: Configurations are not included in the role! It is going to be added ASAP.
-
 ## System Configurations
 ### Disable swapping
 Swapping is very bad for performance, for node stability, and should be avoided at all costs. It can cause garbage collections to last for minutes instead of milliseconds and can cause nodes to respond slowly or even to disconnect from the cluster.
