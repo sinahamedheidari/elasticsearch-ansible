@@ -4,9 +4,10 @@
     state: present
 
 - name: Add Elasticsearch repository
-  copy:
-    src: "templates/debianrepo.j2"  
-    dest: /etc/apt/sources.list.d/elastic-7.x.list
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+    state: present
+    filename: elasticsearch
 
 - name: Install required packages
   apt:
@@ -19,5 +20,23 @@
     name: elasticsearch
     state: present
     update_cache: yes
+    
+- name: Copy Elasticsearch configuration file
+  copy: 
+    src: "files/elasticsearch.yml"
+    dest: /etc/elasticsearch/elasticsearch.yml
   notify:
-    - Start Elasticsearch
+    - Restart Elasticsearch
+
+- name: Copy Elasticsearch configuration file
+  copy: 
+    src: "files/jvm.options"
+    dest: /etc/elasticsearch/jvm.options
+  notify:
+    - Restart Elasticsearch
+
+- name: Ensure Elasticsearch is started and enabled at boot time
+  service:
+    name: elasticsearch
+    state: started
+    enabled: yes
