@@ -27,6 +27,13 @@
       notify:
         - Restart Elasticsearch
     
+    - name: Copy Elasticsearch configuration file
+      copy: 
+        src: "files/jvm.options"
+        dest: /etc/elasticsearch/jvm.options
+      notify:
+        - Restart Elasticsearch
+    
     - name: Ensure Elasticsearch is started and enabled at boot time
       service:
         name: elasticsearch
