@@ -14,13 +14,13 @@
 #
 # Use a descriptive name for your cluster:
 #
-cluster.name: sakku-es-cluster
+cluster.name: linu-es-cluster
 #
 # ------------------------------------ Node ------------------------------------
 #
 # Use a descriptive name for the node:
 #
-node.name: sakku-es-01
+node.name: linu-es-01
 #
 # Add custom attributes to the node:
 #
@@ -52,7 +52,7 @@ bootstrap.memory_lock: true
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-network.host: 193.176.240.243
+network.host: 192.168.100.10
 #
 # Set a custom port for HTTP:
 #
@@ -66,12 +66,12 @@ http.port: 9200
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 #discovery.seed_hosts: ["host1", "host2"]
-#discovery.seed_hosts: ["sakku-es-01"]
+#discovery.seed_hosts: ["linu-es-01"]
 discovery.type: single-node
 #
 # Bootstrap the cluster using an initial set of master-eligible nodes:
 #
-#cluster.initial_master_nodes: ["sakku-es-01"]
+#cluster.initial_master_nodes: ["linu-es-01"]
 #
 # For more information, consult the discovery and cluster formation module documentation.
 #
